@@ -15,11 +15,6 @@ export default class TodoList extends React.Component {
               toggleCompleted={this.props.toggleCompleted}
               todo={td}
             />
-        // <div 
-        //   onClick={this.props.toggleCompleted(td.id)}
-        //   key={td.id}>
-        //   {td.name} {td.completed ? ' ✔️' : ''}
-        // </div>
       )
         return acc
       }, [])
