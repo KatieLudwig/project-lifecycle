@@ -1,11 +1,18 @@
 import React from 'react'
-import axios from 'axios';
+import axios from 'axios'
 
 const URL = 'http://localhost:9000/api/todos'
 
 export default class App extends React.Component {
   state = {
     todos: [],
+    error: '',
+    todoNameInput: '',
+  }
+
+  onTodoInputChange = evt => {
+    const { value } = evt.target
+    this.setState({ ...this.state, todoNameInput: value })
   }
 
   fetchAllTodos = () => {
@@ -14,7 +21,7 @@ export default class App extends React.Component {
       this.setState({...this.setState, todos: res.data.data })
     })
     .catch(err => {
-      debugger
+      this.setState({...this.setState, error: err.response.data.messge})
     })
   }
 
@@ -25,7 +32,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <div id="error">Error: no error here</div>
+        <div id="error">Error: {this.state.error}</div>
         <div id="todos">
         <h1>Todos: </h1>
         {
@@ -35,7 +42,7 @@ export default class App extends React.Component {
         }
         </div>
         <form id='todoForm'>
-          <input type='text' placeholder='Type todo'></input>
+          <input value={this.state.todoNameInput} onChange={this.onTodoInputChange} type='text' placeholder='Type todo'></input>
           <input type='submit'></input>
           <button>Clear Completed</button>
         </form>
